@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Examples.Charge.Core.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Examples.Charge.Domain.Aggregates.ExampleAggregate.Interfaces
 {
-    public interface IExampleRepository
+    public interface IExampleRepository : IRepository<Example>
     {
         Task<IEnumerable<Example>> FindAllAsync();
     }

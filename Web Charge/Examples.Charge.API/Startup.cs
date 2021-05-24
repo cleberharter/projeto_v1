@@ -11,6 +11,14 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Linq;
+using Examples.Charge.Application.Validations.Person;
+using Examples.Charge.Domain.Aggregates.PersonAggregate.Interfaces;
+using Examples.Charge.Infra.Data.Repositories;
+using Examples.Charge.Domain.Aggregates.ExampleAggregate.Interfaces;
+using Examples.Charge.Application.Facade;
+using Examples.Charge.Application.Interfaces;
+using Examples.Charge.Domain.Aggregates.PersonAggregate;
+using Examples.Charge.Domain.Aggregates.ExampleAggregate;
 
 namespace Examples.Charge.API
 {
@@ -28,11 +36,29 @@ namespace Examples.Charge.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<ExampleContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure();
+                });
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Examples.Charge.Infra.Data.Configuration"));
             });
+
             NativeInjector.Setup(services);
             services.AddAutoMapper();
+
+            services.AddScoped<IExampleFacade, ExampleFacade>();
+            services.AddScoped<IPersonFacade, PersonFacade>();
+
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IExampleService, ExampleService>();
+
+            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IExampleRepository, ExampleRepository>();
+
+            services.AddScoped<IPersonValidator, PersonBaseValidator>();
+
+            services.AddScoped<ExampleContext>();
 
             services.AddSwaggerGen(options =>
             {

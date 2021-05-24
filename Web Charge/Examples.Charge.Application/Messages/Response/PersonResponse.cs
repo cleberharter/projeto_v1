@@ -1,11 +1,10 @@
 ﻿using Examples.Charge.Application.Common.Messages;
-using Examples.Charge.Application.Dtos;
-using System.Collections.Generic;
+using Examples.Charge.Application.Dtos.Person;
 
 namespace Examples.Charge.Application.Messages.Response
 {
     public class PersonResponse : BaseResponse
     {
-        public List<PersonDto> PersonObjects { get; set; }
+        public PersonDto Person { get; set; }
     }
 }

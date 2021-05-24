@@ -1,15 +1,21 @@
-﻿using Abp.Domain.Entities;
-using Abp.Events.Bus;
+﻿
+using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Examples.Charge.Domain.Aggregates.ExampleAggregate
 {
-    public class Example: Entity, IAggregateRoot
+    public class Example : AggregateRoot, IHasCreationTime
     {
         public string Nome { get; set; }
 
-        public ICollection<IEventData> DomainEvents => throw new NotImplementedException();
+        [NotMapped]
+        public DateTime CreationTime { get; set; }
+
+        public Example()
+        {
+            this.CreationTime = DateTime.Now;
+        }
     }
 }

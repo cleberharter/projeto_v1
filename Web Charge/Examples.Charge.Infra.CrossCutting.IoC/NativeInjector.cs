@@ -9,6 +9,9 @@ using Examples.Charge.Domain.Aggregates.ExampleAggregate.Interfaces;
 using Examples.Charge.Domain.Aggregates.PersonAggregate;
 using Examples.Charge.Domain.Aggregates.PersonAggregate.Interfaces;
 using Examples.Charge.Infra.Data.Repositories;
+using Abp.Events.Bus;
+using Examples.Charge.Domain.Events.Person;
+using Examples.Charge.Domain.Handlers;
 
 namespace Examples.Charge.Infra.CrossCutting.IoC
 {
@@ -37,6 +40,8 @@ namespace Examples.Charge.Infra.CrossCutting.IoC
             
             services.AddScoped<IPhoneNumberTypeService, PhoneNumberTypeService>();
             services.AddScoped<IPhoneNumberTypeRepository, PhoneNumberTypeRepository>();
+
+            EventBus.Default.Register<PersonEventAdded, PersonAddedHandler>();
         }
 
         private static void RegisterAutoMapper(IServiceCollection services)
@@ -44,6 +49,7 @@ namespace Examples.Charge.Infra.CrossCutting.IoC
             new MapperConfiguration(configuration =>
             {
                 configuration.AddProfile<ExampleProfile>();
+                configuration.AddProfile<PersonProfile>();
             }).CompileMappings();
         }
     }

@@ -13,7 +13,7 @@ namespace Examples.Charge.API.Controllers
     {
         private IExampleFacade _facade;
 
-        public ExampleController(IExampleFacade facade, IMapper mapper)
+        public ExampleController(IExampleFacade facade)
         {
             _facade = facade;
         }
