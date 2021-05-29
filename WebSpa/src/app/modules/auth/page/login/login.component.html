@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row main-content bg-success text-center">
+    <div class="col-md-4 text-center company_info">
+      <img class="logotipo white img-responsive img-fluid" src="./assets/img/logo.jpg" alt="Stefanini">
+      <h4 class="company_title">Stefanini</h4>
+    </div>
+    <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+      <div class="container-fluid">
+        <div class="text-center">
+          <h2>Bem-Vindo</h2>
+        </div>
+        <div class="text-center">
+          <fieldset [disabled]="isLoading">
+            <form (ngSubmit)="login()" [formGroup]="loginForm">
+                <div class="form-group">
+                  <label class="d-block">
+                    <input type="text" class="form-control" placeholder="Informe seu none" formControlName="username">
+                    <app-control-messages [control]="f['username']"></app-control-messages>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="d-block">
+                    <input type="password" name="password" autocomplete="on" class="form-control" placeholder="Infome sua senha" formControlName="password">
+                    <app-control-messages [control]="f['password']"></app-control-messages>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-login" type="submit" [disabled]="loginForm.invalid">
+                    <span [hidden]="isLoading">Entrar</span>
+                    <span [hidden]="!isLoading">
+                      <fa-icon icon="asterisk" size="3x" [spin]="true"></fa-icon>
+                    </span>
+                  </button>
+              </div>
+            </form>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="text-center">Login e senha: admin</p>
+</div>

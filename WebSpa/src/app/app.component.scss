@@ -1,0 +1,24 @@
+::ng-deep .mat-snack-bar-container{
+    color: #fff !important;
+    background-color: #155724 !important;
+    border-color: #c3e6cb !important;
+}
+::ng-deep .mat-snack-bar-container.error {
+    background-color: red !important;
+}
+::ng-deep .mat-snack-bar-container.info {
+    background-color: #0c5088 !important;
+}
+::ng-deep .mat-simple-snackbar-action {
+    color: #fff !important;
+}
+::ng-deep .mat-mini-fab.mat-primary {
+    background-color: #0b1641 !important;
+}
+::ng-deep .mat-raised-button.btn.btn-info, 
+.mat-raised-button.btn:not([class*=mat-elevation-z]).btn-info, 
+.btn.btn-info {
+    background-color: #0b1641 !important;
+    border-color: #0b1641 !important;
+    box-shadow: 0 2px 2px 0 #0b1641, 0 3px 1px -2px #0b1641, 0 1px 5px 0 #0b1641 !important;
+}

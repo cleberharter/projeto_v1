@@ -1,0 +1,31 @@
+.mat-table {
+    width: 100% !important;
+}
+.mat-column-id, .mat-column-name, .mat-column-telephone, .mat-column-cellPhone {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 22% !important;
+    width: 22% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+::ng-deep .mat-mini-fab {
+    height: 34px !important;
+    width: 34px !important;
+    margin: 5px !important;
+}
+::ng-deep .material-icons {
+    vertical-align: middle !important;
+    font-size: 20px;
+}
+::ng-deep .mat-mini-fab .mat-button-wrapper {
+    padding: 6px 0 !important;
+}
+
