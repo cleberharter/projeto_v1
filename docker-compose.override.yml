@@ -1,11 +1,8 @@
 version: '3.4'
 
 services:
-  pgc.charge.api:
+  examples.charge.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
-  db:
-    ports:
-      - "1433:1433"

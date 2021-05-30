@@ -3,10 +3,10 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>8caf65b5-587e-498c-845a-63c7274d0f79</ProjectGuid>
+    <ProjectGuid>ee971e97-6a4a-4e33-a252-ae08b7cedf42</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/example</DockerServiceUrl>
-    <DockerServiceName>pgc.charge.api</DockerServiceName>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceName>examples.charge.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
