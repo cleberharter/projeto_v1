@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Examples.Charge.Core.Data;
+using Examples.Charge.Core.Extensions;
 
 namespace Examples.Charge.Infra.Data
 {
@@ -18,6 +19,8 @@ namespace Examples.Charge.Infra.Data
         public IUnitOfWork UnitOfWork { get; set; }
         protected readonly ExampleContext _context;
 
+        public virtual DbSet<TEntity> Table => _context.Set<TEntity>();
+
         protected Repository(ExampleContext context)
         {
             _context = context;
@@ -25,7 +28,7 @@ namespace Examples.Charge.Infra.Data
         }
 
         public async Task AddAsync(TEntity entity)
-            => await _context.Set<TEntity>().AddAsync(entity);
+            => await Table.AddAsync(entity);
 
         public int Count()
         {
@@ -86,7 +89,7 @@ namespace Examples.Charge.Infra.Data
                 .ToListAsync();
 
         public Task<int> CountAsync<TFilter>(TFilter filter) where TFilter : BaseFilter<TEntity>
-           => _context.Set<TEntity>()
+           => Table
                .AsNoTracking()
                .Where(filter.ToQuery())
                .CountAsync();
@@ -113,7 +116,7 @@ namespace Examples.Charge.Infra.Data
         private IQueryable<TEntity> BuidQueryable<TFilter>(Pagination pagination, TFilter filter)
             where TFilter : BaseFilter<TEntity>
         {
-            return _context.Set<TEntity>()
+            return Table
                 .Where(filter.ToQuery())
                 .OrderByDescending(x => x.CreationTime)
                 .ConfigureSkipTakeFromPagination(pagination);
@@ -156,14 +159,48 @@ namespace Examples.Charge.Infra.Data
             throw new NotImplementedException();
         }
 
+        public IQueryable<TEntity> GetById(int id)
+        {
+            return Table.Where(x => x.Id == id);
+        }
+
+        public IQueryable<TEntity> GetIncluding(int id, params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            if (propertySelectors.IsNullOrEmpty())
+            {
+                return GetById(id);
+            }
+
+            var query = GetById(id);
+
+            foreach (var propertySelector in propertySelectors)
+            {
+                query = query.Include(propertySelector);
+            }
+
+            return query;
+        }
+
         public IQueryable<TEntity> GetAll()
         {
-            throw new NotImplementedException();
+            return Table;
         }
 
         public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
         {
-            throw new NotImplementedException();
+            if (propertySelectors.IsNullOrEmpty())
+            {
+                return GetAll();
+            }
+
+            var query = GetAll();
+
+            foreach (var propertySelector in propertySelectors)
+            {
+                query = query.Include(propertySelector);
+            }
+
+            return query;
         }
 
         public List<TEntity> GetAllList()
@@ -262,7 +299,7 @@ namespace Examples.Charge.Infra.Data
         }
 
         public void Remove(TEntity entity)
-            => _context.Set<TEntity>().Remove(entity);
+            => Table.Remove(entity);
 
         public TEntity Single(Expression<Func<TEntity, bool>> predicate)
         {
@@ -273,9 +310,6 @@ namespace Examples.Charge.Infra.Data
         {
             throw new NotImplementedException();
         }
-
-        public void Update(TEntity entity)
-            => _context.Set<TEntity>().Update(entity);
 
         public TEntity Update(int id, Action<TEntity> updateAction)
         {
@@ -292,9 +326,10 @@ namespace Examples.Charge.Infra.Data
             throw new NotImplementedException();
         }
 
-        TEntity Abp.Domain.Repositories.IRepository<TEntity, int>.Update(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            Table.Update(entity);
+            return entity;
         }
     }
 }

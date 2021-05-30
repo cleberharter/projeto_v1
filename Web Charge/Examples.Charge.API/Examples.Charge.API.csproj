@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Examples.Charge.Migration\Examples.Charge.Infra.Data.Configuration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+
 </Project>

@@ -1,15 +1,18 @@
-﻿using Abp.Events.Bus;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Examples.Charge.Domain.Aggregates.PersonAggregate
 {
-    public class PhoneNumberType
+    public class PhoneNumberType : AggregateRoot, IHasCreationTime
     {
-        public int PhoneNumberTypeID { get; set; }
+        [Column("PhoneNumberTypeID")]
+        public override int Id { get; set; }
 
         public string Name { get; set; }
 
-        public ICollection<IEventData> DomainEvents => throw new NotImplementedException();
+        [NotMapped]
+        public DateTime CreationTime { get; set; }
     }
 }

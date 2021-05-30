@@ -14,7 +14,10 @@ namespace Examples.Charge.Domain.Aggregates.PersonAggregate
             _personRepository = personRepository;
         }
 
-        public async Task<List<Person>> FindAllAsync() => (await _personRepository.FindAllAsync()).ToList();
+        public async Task<List<Person>> FindAllAsync()
+        {
+            return await Task.FromResult(_personRepository.GetAllIncluding(x => x.Phones).ToList<Person>());
+        }
 
         public async Task AddAsync(Person person)
         {
@@ -25,14 +28,14 @@ namespace Examples.Charge.Domain.Aggregates.PersonAggregate
 
         public async Task<Person> FindAsync(int Id)
         {
-            return await _personRepository.FindAsync(Id);
+            return await Task.FromResult(_personRepository.GetIncluding(Id, x => x.Phones).FirstOrDefault<Person>());
         }
 
         public async Task<Person> UpdateAsync(Person person)
         {
-            var personResult = await _personRepository.UpdateAsync(person);
+            _personRepository.Update(person);
             await _personRepository.UnitOfWork.CommitAsync();
-            return personResult;
+            return person;
         }
 
         public async Task RemoveAsync(int Id)

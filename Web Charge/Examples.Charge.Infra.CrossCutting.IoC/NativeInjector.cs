@@ -50,6 +50,7 @@ namespace Examples.Charge.Infra.CrossCutting.IoC
             {
                 configuration.AddProfile<ExampleProfile>();
                 configuration.AddProfile<PersonProfile>();
+                configuration.ForAllMaps((_, x) => x.IgnoreAllPropertiesWithAnInaccessibleSetter());
             }).CompileMappings();
         }
     }

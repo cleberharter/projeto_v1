@@ -7,7 +7,6 @@ using Examples.Charge.Application.Validations.Person;
 using Examples.Charge.Core.Notifications;
 using Examples.Charge.Domain.Aggregates.PersonAggregate;
 using Examples.Charge.Domain.Aggregates.PersonAggregate.Interfaces;
-using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,6 +35,7 @@ namespace Examples.Charge.Application.Facade
             response.PersonObjects = new List<PersonDto>();
             response.PersonObjects.AddRange(result.Select(x => _mapper.Map<PersonDto>(x)));
             return response;
+
         }
 
         public async Task<PersonDto> FindAsync(int Id)
@@ -50,7 +50,6 @@ namespace Examples.Charge.Application.Facade
                 return ApplicationDataResult<PersonDto>.FactoryFromNotificationContext(result);
 
             Person person = _mapper.Map<Person>(personDto);
-
             await _personService.AddAsync(person);
 
             return ApplicationDataResult<PersonDto>.FactoryFromData(_mapper.Map<PersonDto>(person));
@@ -64,7 +63,10 @@ namespace Examples.Charge.Application.Facade
             if (result.HasNotifications)
                 return ApplicationDataResult<PersonDto>.FactoryFromNotificationContext(result);
 
-            Person person = _mapper.Map<Person>(personDto);
+            Person person = await _personService.FindAsync(Id);
+            ICollection<PersonPhone> phones = _mapper.Map<ICollection<PersonPhone>>(personDto.Phones);
+
+            person.Update(personDto.Name, phones);
             await _personService.UpdateAsync(person);
 
             return ApplicationDataResult<PersonDto>.FactoryFromData(_mapper.Map<PersonDto>(person));

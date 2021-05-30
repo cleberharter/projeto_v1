@@ -85,10 +85,6 @@ namespace Examples.Charge.Application.Validations.Person
                 return notificationContext.AddNotification(
                     CreateNotification(nameof(Person), ApplicationValidationMessages.PersonNotFoundById));
 
-            if (person != null)
-                notificationContext.AddNotification(
-                    CreateNotification(nameof(Person), ApplicationValidationMessages.PersonHasItems));
-
             return notificationContext;
         }
 

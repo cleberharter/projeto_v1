@@ -10,7 +10,7 @@ namespace Examples.Charge.Infra.Data.Configuration
         {
             builder.Ignore(b => b.DomainEvents);
 
-            builder.ToTable("Person", "dbo").HasKey(t => t.Id);
+           builder.ToTable("Person", "dbo").HasKey(t => t.Id);
 
             builder.Property(t => t.Id).HasColumnName("BusinessEntityID").IsRequired(true);
             builder.Property(t => t.Name).HasColumnName("Name").IsRequired(true);

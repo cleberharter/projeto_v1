@@ -2,7 +2,10 @@
 using Abp.Domain.Repositories;
 using Exemples.Charge.Core.Data;
 using Exemples.Charge.Core.DomainObjects;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Examples.Charge.Core.Data
@@ -16,6 +19,8 @@ namespace Examples.Charge.Core.Data
         void Remove(TEntity entity);
 
         Task<TEntity> FindAsync(int id);
+
+        IQueryable<TEntity> GetIncluding(int id, params Expression<Func<TEntity, object>>[] propertySelectors);
 
         Task<TEntity> FindAsync<TFilter>(TFilter filter) where TFilter : BaseFilter<TEntity>;
 

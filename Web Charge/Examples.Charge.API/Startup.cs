@@ -46,6 +46,7 @@ namespace Examples.Charge.API
 
             NativeInjector.Setup(services);
             services.AddAutoMapper();
+            services.AddCors();
 
             services.AddScoped<IExampleFacade, ExampleFacade>();
             services.AddScoped<IPersonFacade, PersonFacade>();
@@ -101,10 +102,16 @@ namespace Examples.Charge.API
 
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("../swagger/v1/swagger.json", "Example Api");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Example Api");
                 options.DisplayRequestDuration();
             });
 
+            app.UseCors(options => {
+                options.WithOrigins("http://localhost:4200")
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseMvc();
         }
