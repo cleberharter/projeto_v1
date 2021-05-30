@@ -3,9 +3,9 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>ee971e97-6a4a-4e33-a252-ae08b7cedf42</ProjectGuid>
+    <ProjectGuid>0f0b6e3d-3a34-404f-9e21-23b89266c6c8</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>examples.charge.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

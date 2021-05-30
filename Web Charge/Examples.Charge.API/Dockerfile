@@ -7,10 +7,12 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
 COPY ["Web Charge/Examples.Charge.API/Examples.Charge.API.csproj", "Web Charge/Examples.Charge.API/"]
-COPY ["Web Charge/Examples.Charge.Infra.CrossCutting.IoC/Examples.Charge.Infra.CrossCutting.IoC.csproj", "Web Charge/Examples.Charge.Infra.CrossCutting.IoC/"]
-COPY ["Web Charge/Examples.Charge.Infra.Data/Examples.Charge.Infra.Data.csproj", "Web Charge/Examples.Charge.Infra.Data/"]
-COPY ["Web Charge/Examples.Charge.Domain/Examples.Charge.Domain.csproj", "Web Charge/Examples.Charge.Domain/"]
 COPY ["Web Charge/Examples.Charge.Application/Examples.Charge.Application.csproj", "Web Charge/Examples.Charge.Application/"]
+COPY ["Web Charge/Examples.Charge.Domain/Examples.Charge.Domain.csproj", "Web Charge/Examples.Charge.Domain/"]
+COPY ["Web Charge/Example.Charge.Core/Examples.Charge.Core.csproj", "Web Charge/Example.Charge.Core/"]
+COPY ["Web Charge/Examples.Charge.Infra.Data/Examples.Charge.Infra.Data.csproj", "Web Charge/Examples.Charge.Infra.Data/"]
+COPY ["Web Charge/Examples.Charge.Infra.CrossCutting.IoC/Examples.Charge.Infra.CrossCutting.IoC.csproj", "Web Charge/Examples.Charge.Infra.CrossCutting.IoC/"]
+COPY ["Web Charge/Examples.Charge.Migration/Examples.Charge.Infra.Data.Configuration.csproj", "Web Charge/Examples.Charge.Migration/"]
 RUN dotnet restore "Web Charge/Examples.Charge.API/Examples.Charge.API.csproj"
 COPY . .
 WORKDIR "/src/Web Charge/Examples.Charge.API"

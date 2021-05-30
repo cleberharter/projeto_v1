@@ -43,6 +43,8 @@ export class CreateOrEditComponent implements OnInit {
         }
       )
     ).subscribe(response => { 
+      if(response == undefined) return;
+
       const resp = (response as any).data;
       if(!resp.person) return;
 
